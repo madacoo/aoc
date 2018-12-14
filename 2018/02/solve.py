@@ -26,22 +26,24 @@ def difference(s1, s2):
         if c1 != c2: results.append(i)
     return results
 
-def solve1(inp):
+def solve1(box_ids):
+    """ What is the checksum for your list of box IDs? """
     two_count = three_count = 0
-    for box_id in inp:
-        two, three = count(box_id)
+    for bid in box_ids:
+        two, three = count(bid)
         if two: two_count += 1
         if three: three_count += 1
     return two_count * three_count
 
 
-def solve2(inp):
-    for box_id1 in inp:
-        for box_id2 in inp:
-            if box_id1 == box_id2: pass
-            d = difference(box_id1, box_id2)
+def solve2(box_ids):
+    """ What letters are common between the two correct box IDs? """
+    for bid1 in box_ids:
+        for bid2 in box_ids:
+            if bid1 == bid2: pass
+            d = difference(bid1, bid2)
             if len(d) == 1:
-                return box_id1[0:d[0]] + box_id1[d[0]+1:]
+                return bid1[0:d[0]] + bid1[d[0]+1:]
 
 
 if __name__ == "__main__":
