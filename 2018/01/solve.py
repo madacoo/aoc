@@ -5,12 +5,12 @@ def parse_input():
 
 
 def solve1(freq_changes):
-    # What is the resulting frequency?
+    """ What is the resulting frequency? """
     return sum(freq_changes)
 
 
 def solve2(freq_changes):
-    # What is the first frequency your device reaches twice?
+    """ What is the first frequency your device reaches twice? """
     current = 0
     freqs = set()
     freqs.add(current)
