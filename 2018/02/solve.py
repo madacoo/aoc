@@ -1,6 +1,6 @@
 
 
-def parse_input():
+def read_input():
     with open('input') as f:
         return [line.strip() for line in f]
 
@@ -47,9 +47,9 @@ def solve2(box_ids):
 
 
 if __name__ == "__main__":
-    inp = parse_input()
-    print(solve1(inp))
-    print(solve2(inp))
+    box_ids = read_input()
+    print(solve1(box_ids))
+    print(solve2(box_ids))
 
 
 

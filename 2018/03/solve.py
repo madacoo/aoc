@@ -4,7 +4,7 @@ from collections import namedtuple, defaultdict
 Rect = namedtuple("Rect", "box_id, x, y, w, h")
 
 
-def parse_input():
+def read_input():
     """ Return a list of Rects. """
     rects = []
     with open('input') as f:
@@ -53,7 +53,7 @@ def solve2(rects):
 
 
 if __name__ == "__main__":
-    rects = parse_input()
+    rects = read_input()
     print(solve1(rects))
     print(solve2(rects))
 
