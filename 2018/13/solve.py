@@ -2,10 +2,6 @@ from collections import namedtuple
 
 
 Track = dict()
-HEIGHT = 0
-WIDTH = 0
-
-
 Vector = namedtuple('Vector', 'x y')
 
 def vadd(va, vb):
@@ -16,7 +12,7 @@ class Kart:
     def __init__(self, position, direction):
         self.pos = position
         self.cross = 0
-        self.dead = False
+        self.alive = True
 
         if direction == '>':
             self.dir = Vector(1, 0)
@@ -38,14 +34,15 @@ class Kart:
 
     def collides(self, karts):
         for k in karts:
-            if k == self: continue
+            if k == self or not k.alive: continue
             if k.pos == self.pos:
+                k.alive = False
+                self.alive = False
                 return True
         return False
 
 
     def move(self):
-        if self.dead: return
         self.pos = vadd(self.pos, self.dir)
 
         part = Track[self.pos]
@@ -92,12 +89,6 @@ def read_input():
                     Track[v] = c
                 x += 1
             y += 1
-
-    global HEIGHT
-    HEIGHT = y-1
-    global WIDTH
-    WIDTH = x-1
-
     return karts
 
 
@@ -116,16 +107,21 @@ def print_track(karts):
         print(''.join(row))
 
 
-def solve1():
+def solve():
     karts = read_input()
-    while True:
-        karts = sorted(karts, key=lambda k: k.pos.y)
+    first_blood = False
+    while len([k for k in karts if k.alive]) > 1:
+        karts = sorted(karts, key=lambda k: (k.pos.y, k.pos.x))
         #print_track(karts)
         for k in karts:
+            if not k.alive: continue
             k.move()
-            if k.collides(karts):
-                return str(k.pos.x) + ',' + str(k.pos.y)
+            if k.collides(karts) and not first_blood:
+                print(str(k.pos.x) + ',' + str(k.pos.y))
+                first_blood = True
+    k = [k for k in karts if k.alive][0]
+    print(str(k.pos.x) + ',' + str(k.pos.y))
 
 
 if __name__ == '__main__':
-    print(solve1())
+    solve()
