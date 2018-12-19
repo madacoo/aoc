@@ -49,7 +49,7 @@ def count(area):
     for k, acre in area.items():
         if acre == '|': trees += 1
         elif acre == '#': lumber += 1
-    return trees, lumber
+    return trees*lumber
 
 
 def print_area(area):
@@ -61,8 +61,27 @@ def print_area(area):
         print()
 
 
-area = read_input()
-for minute in range(10):
-    area = tick(area)
-trees, lumber = count(area)
-print(trees*lumber)
+def solve1(n):
+    area = read_input()
+    for minute in range(n):
+        area = tick(area)
+    return count(area)
+
+
+def solve2():
+    tortoise  = read_input()
+    hare = tick(read_input())
+    tmin, hmin = 0, 1
+    while True:
+        tortoise = tick(tortoise)
+        hare = tick(tick(hare))
+        tmin += 1
+        hmin += 2
+        if count(tortoise) == count(hare):
+            break
+    return tmin + (1000000000-tmin) % (hmin-tmin)
+
+
+if __name__ == '__main__':
+    print(solve1(10))
+    print(solve1(solve2()))
