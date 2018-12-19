@@ -3,14 +3,9 @@
 def read_input():
     area = dict()
     with open('input') as f:
-        y = 0
-        for line in f:
-            row = []
-            x = 0
-            for c in line.strip():
-                area[(x, y)] = c
-                x += 1
-            y += 1
+        for y, line in enumerate(f):
+            for x, acre in enumerate(line.strip()):
+                area[(x, y)] = acre
     return area
 
 
