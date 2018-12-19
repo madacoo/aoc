@@ -45,13 +45,10 @@ def tick(area):
 
 
 def count(area):
-    trees = 0
-    lumber = 0
+    trees = lumber = 0
     for k, acre in area.items():
-        if acre == '|':
-            trees += 1
-        elif acre == '#':
-            lumber += 1
+        if acre == '|': trees += 1
+        elif acre == '#': lumber += 1
     return trees, lumber
 
 
