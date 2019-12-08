@@ -1,0 +1,22 @@
+#!/usr/bin/python3
+
+# part 1
+total = 0
+with open('input') as f:
+    for line in f.readlines():
+        total += int(line)//3-2
+print(total)
+
+
+# part 2
+total = 0
+with open('input') as f:
+    for line in f.readlines():
+        fuel = int(line)//3-2
+        while fuel > 0:
+            total += fuel
+            fuel = int(line)//3-2
+print(total)
+
+
+
