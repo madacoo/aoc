@@ -1,13 +1,7 @@
-from math import sqrt, atan2, degrees
+from math import sqrt, atan2, degrees, gcd
 from collections import namedtuple, defaultdict
 
 Point = namedtuple('Point', 'x y')
-
-def gcd(x, y):
-    x, y = min(x, y), max(x, y)
-    while y:
-        x, y = y, x % y
-    return x
 
 def integral_points(v):
     if v.x < 0 and v.y < 0:
@@ -32,9 +26,6 @@ def can_see(a, b, asteroids):
             return False
     return True
 
-def angle(a, b):
-    pass
-
 def distance(a, b):
     return sqrt(abs(a.x - b.x)**2 + abs(a.y - b.y)**2)
 
@@ -43,7 +34,7 @@ def angle(a, b):
     return atan2(v.x, v.y)
 
 asteroids = []
-with open('testinput', 'r') as f:
+with open('input', 'r') as f:
     y = 0
     for line in f:
         for x, p in enumerate(line.strip()):
@@ -59,4 +50,22 @@ for a in asteroids:
         if can_see(a, b, asteroids): count += 1
     detection_counts.append(count)
 
+station, count = sorted(zip(asteroids, detection_counts), key=lambda t: t[1])[-1]
+print(count)
+
+angle_dict = defaultdict(list)
+for a in asteroids:
+    if a == station: continue
+    angle_dict[angle(station, a)].append((a, distance(station, a)))
+
+for th in angle_dict.keys(): angle_dict[th].sort(key=lambda t: t[1])
+
+count = 0
+
+for k in  sorted(angle_dict.keys(), reverse=True):
+    if len(angle_dict[k]) > 0:
+        a, d = angle_dict[k].pop(0)
+        count += 1
+        if count == 200:
+            print(a.x*100 + a.y)
 
